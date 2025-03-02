@@ -12,7 +12,7 @@ public class Util {
     private static final String USER = "root";
     private static final String PASSWORD = "kitekat"; // Укажи свой пароль
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
