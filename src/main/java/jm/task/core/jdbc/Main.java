@@ -1,29 +1,28 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
-import java.util.List;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-        userDaoJDBC.createUsersTable();
-        System.out.println("Таблица users создана (если её не было)");
-        User kuko = new User("Kuko", "Ku", (byte) 12);
-        User kuku = new User("Kuku", "Ku", (byte) 13);
-        User kuky = new User("Kuky", "Ku", (byte) 14);
-        userDaoJDBC.saveUser(kuko.getName(), kuko.getLastName(), kuko.getAge());
-        userDaoJDBC.saveUser(kuku.getName(), kuku.getLastName(), kuku.getAge());
-        userDaoJDBC.saveUser(kuky.getName(), kuky.getLastName(), kuky.getAge());
-        List<User> users = userDaoJDBC.getAllUsers();
+        UserService userService = new UserServiceImpl();
+
+        userService.createUsersTable();
+
+        userService.saveUser("Ivan", "Ivanov", (byte) 20);
+        userService.saveUser("Petr", "Petrov", (byte) 30);
+        userService.saveUser("Sidor", "Sidorov", (byte) 40);
+        userService.saveUser("Vlad", "Vladov", (byte) 50);
+
+        List<User> users = userService.getAllUsers();
         for (User user : users) {
             System.out.println(user);
         }
-        userDaoJDBC.cleanUsersTable();
-        users = userDaoJDBC.getAllUsers();
-        System.out.println("Размер списка после очистки: " + users.size());
+
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
     }
 }
